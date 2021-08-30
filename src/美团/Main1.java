@@ -1,70 +1,33 @@
 package 美团;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int numOfT = Integer.parseInt(sc.nextLine());//T
-        int loop_times = 0;
-        while(loop_times < numOfT){
-            int n = Integer.parseInt(sc.nextLine());
-            int[] TestNum = new int[n];
-            String s = sc.nextLine();
-            for (int i = 0; i < s.length(); i++) {
-                TestNum[i] = Integer.parseInt(String.valueOf(s.charAt(i)));
-            }
-            if (!HuiWenshuOrNot(TestNum)) {
-                changeTheArray(TestNum);
-            }
-            System.out.println(Arrays.toString(TestNum));
-            loop_times++;
+        int loop_times = Integer.parseInt(sc.nextLine());//T
+        int[] flavor = new int[loop_times];
+        for (int i = 0; i < loop_times; i++) {
+            int n = sc.nextInt();
+            flavor[i] = n;
         }
-
-
-
+        if (loop_times == 1){
+            System.out.print(flavor[0]);
+        }
+        System.out.print(happy(flavor));
     }
 
-    public static void changeTheArray(int[] input){
-        for (int i = 0; i < input.length; i++) {
-            if(input[i] != 0) {
-                input[i] = 0;
-                break;
-            }
-        }
-    }
-
-    public static boolean HuiWenshuOrNot(int[] Array_of_arr){
-        int startOfArray = 0;
-        int endOfArray = Array_of_arr.length - 1;
-        int countChange = 0;
-        int leftNeedToChange = 0;
-        int rightNeedToChange = 0;
-        while(startOfArray < endOfArray){
-            if(Array_of_arr[startOfArray]!= Array_of_arr[endOfArray]){
-                countChange++;
-                leftNeedToChange = startOfArray;
-                rightNeedToChange = endOfArray;
-                if(countChange > 1){
-                    return false;
+    private static int happy(int[] nums){
+        int sum = 0;
+        for (int i = 1; i < nums.length; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i] && nums[j] > max){
+                    max = nums[j];
                 }
             }
-            startOfArray++;
-            endOfArray--;
+            sum += max;
         }
-        Array_of_arr[leftNeedToChange] = Math.min(Array_of_arr[leftNeedToChange], Array_of_arr[rightNeedToChange]);
-        Array_of_arr[rightNeedToChange] = Math.min(Array_of_arr[rightNeedToChange], Array_of_arr[leftNeedToChange]);
-        return true;
+        return sum;
     }
 }
-
-/*
-*
-2
-5
-00011
-5
-11210
-
-* */

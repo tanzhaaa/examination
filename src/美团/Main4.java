@@ -1,39 +1,56 @@
 package 美团;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main4 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int k = sc.nextInt();
-        int i = 0;
-        int [] nums = new int[n];
-        while(i < n){
-            nums[i] = sc.nextInt();
-            i++;
-        }
-        int res =  maxSubArray(n, nums);
+        int m = sc.nextInt();
+        String no = sc.nextLine();
+        int days = Integer.parseInt(sc.nextLine());
+        int [] x = new int[days];
+        int [] y = new int[days];
+        int [] r = new int[days];
 
+        for (int i = 0; i < days; i++) {
+            x[i] = sc.nextInt(); // x
+            y[i] = sc.nextInt(); //y
+            r[i] = sc.nextInt();
+            if (i == days-1){
+                continue;
+            }
+            no = sc.nextLine();
+        }
+        int [][] seed = new int[n][m];
+        int sum = 0;
+        for (int i = 0; i < days; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < m; k++) {
+                    if (inCircle(j,k,x[i],y[i],r[i])){
+                        seed[j][k] = 0;
+                    }else {
+                        seed[j][k] ++;
+                        if (i == days-1){
+                            sum+=seed[j][k];
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(sum+1);
     }
 
-    private static int maxSubArray(int n, int[] nums) {
-        int[] End = new int[n];
-        int[] All = new int[n];
-        End[n -1] = nums[n -1];
-        All[n -1] = nums[n -1];
-        End[0] = All[0] = nums[0];
-        for (int i = 0; i < n; i++) {
-            End[i] = Integer.max(End[i-1]+ nums[i], nums[i]);
-            All[i] = Integer.max(End[i], All[i-1]);
+    private static boolean inCircle(int a, int b, int x, int y, int r){
+        if (a==x && b == y){
+            return true;
         }
-        return All[n -1];
+        int ax = a-x+1;
+        int by = b-y+1;
+        int in = ax*ax + by*by;
+        if (in <= r*r){
+            return true;
+        }
+        return false;
     }
 }
-
-/*
-3 2
-1 2 4
-*
-* */

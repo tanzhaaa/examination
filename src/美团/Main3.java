@@ -1,56 +1,35 @@
 package 美团;
 
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main3 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int m = sc.nextInt();
-        int [] nums = new int[n];
-        int [] query = new int[m];
-
-        HashMap<Integer,Integer> map1 = new HashMap<>();
-        HashMap<Integer,Integer> map2 = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            nums[i] = sc.nextInt();
-        }
-        for (int i = 0; i < m; i++) {
-            query[i] = sc.nextInt();
-        }
-        for (int i = 0; i < n; i++) {
-            if(! map1.containsKey(nums[i])){
-               map1.put(nums[i],i);
-            }else{
-                map2.put(nums[i], i);
-            }
-        }
-        for (int i = 0; i < m; i++) {
-            if(map1.containsKey(query[i])){
-                System.out.print(map1.get(query[i])+1);
-                System.out.print(" ");
-                if(map2.get(query[i]) == null){
-                    System.out.println(map1.get(query[i])+1);
-                }else{
-                    System.out.println(map2.get(query[i])+1);
+        String s1 = sc.next();
+        String s2 = sc.next();
+        int n = s1.length();
+        int m = s2.length();
+        int counts1 = 0, counts2 = 0;
+        char chs2 = s2.charAt(counts2);
+        for (int i = 0; i <=n; i++) {
+            if (i == n){
+                if (counts2 == 0){
+                    System.out.println(-1);
+                    return;
                 }
-
-            }else{
-                System.out.println(0);
+                i = 0;
+                continue;
+            }
+            counts1++;
+            char chs1 = s1.charAt(i);
+            if (chs1 == chs2){
+                counts2++;
+                if (counts2 == m){
+                    System.out.println(counts1 - counts2 + 1);
+                    return;
+                }
+                chs2 = s2.charAt(counts2);
             }
         }
     }
 }
-
-/*
-*
-*
-*
-* 6 4
-2 3 1 2 3 3
-1
-2
-3
-4
-* */
